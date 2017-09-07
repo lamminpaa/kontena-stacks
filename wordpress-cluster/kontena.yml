@@ -66,6 +66,7 @@ services:
     mem_limit: 128m
     affinity:
       - "{{ mariadb_affinity }}"
+      - "label==region=fi-hel1"
   mariadb-galera:
     image: severalnines/mariadb:latest
     instances: 3
@@ -98,6 +99,7 @@ services:
       strategy: daemon
     affinity:
       - "{{ wp_affinity }}"
+      - "label==region=fi-hel1"
     secrets:
       - secret: ${STACK}-resilio-secret
         name: RSLSYNC_SECRET
@@ -111,6 +113,7 @@ services:
     mem_limit: 512m
     affinity:
       - "{{ wp_affinity }}"
+      - "label==region=fi-hel1"
     secrets:
       - secret: ${STACK}-mysql-pwd
         name: WORDPRESS_DB_PASSWORD
