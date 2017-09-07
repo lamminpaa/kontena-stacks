@@ -70,10 +70,17 @@ services:
   mariadb-galera:
     image: severalnines/mariadb:latest
     instances: 3
+    health_check:
+      protocol: tcp
+      port: 3306
+      interval: 10
+      initial_delay: 10
+      timeout: 2
     affinity:
       - "{{ mariadb_affinity }}"
       - "label==region=fi-hel1"
     deploy:
+      strategy: ha
       wait_for_port: 3306
     secrets:
       - secret: ${STACK}-mysql-pwd
@@ -112,6 +119,14 @@ services:
     image: wordpress:4.8
     instances: 3
     mem_limit: 512m
+    health_check:
+      protocol: http
+      port: 80
+      interval: 20
+      uri: /
+      initial_delay: 10
+      timeout: 2
+
     affinity:
       - "{{ wp_affinity }}"
       - "label==region=fi-hel1"
