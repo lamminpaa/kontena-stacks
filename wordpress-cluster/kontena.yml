@@ -72,6 +72,7 @@ services:
     instances: 3
     affinity:
       - "{{ mariadb_affinity }}"
+      - "label==region=fi-hel1"
     deploy:
       wait_for_port: 3306
     secrets:
